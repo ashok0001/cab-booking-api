@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.zosh.exception.UserException;
 import com.zosh.modal.User;
 import com.zosh.repository.UserRepository;
+import com.zosh.request.SignupRequest;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -22,7 +23,7 @@ public class UserServiceImplementation implements UserService {
 		
 		if(emailExist!=null)throw new UserException("Email Already Used With Another Account");
 		
-		
+
 		
 		return userRepository.save(user);
 		
