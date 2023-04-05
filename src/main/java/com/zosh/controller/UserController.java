@@ -17,8 +17,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/signup")
-	public ResponseEntity<User> signupHandler(User user)throws UserException{
+	@PostMapping("/{userId}")
+	public ResponseEntity<User> findUserByIdHandler(User user)throws UserException{
 		
 		User createdUser = userService.createUser(user);
 		
