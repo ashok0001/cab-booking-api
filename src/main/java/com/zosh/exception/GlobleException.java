@@ -27,7 +27,7 @@ public class GlobleException {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorDetails> otherExceptionHandler(UserException ue, WebRequest req){
 		
-		ErrorDetails err=new ErrorDetails(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
+		ErrorDetails err=new ErrorDetails(ue.getMessage(),req.getDescription(false), LocalDateTime.now());
 		
 		
 		return new ResponseEntity<ErrorDetails>(err,HttpStatus.ACCEPTED);
