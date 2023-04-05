@@ -19,9 +19,9 @@ public class AuthController {
 	
 	@PostMapping("/signup")
 	public ResponseEntity<User> signupHandler(User user)throws UserException{
-		
+		System.out.println("signup ---------- ");
 		User createdUser = userService.createUser(user);
-		
+		System.out.println("created User " + createdUser);
 		return new ResponseEntity<User>(createdUser,HttpStatus.ACCEPTED);
 		
 	}
