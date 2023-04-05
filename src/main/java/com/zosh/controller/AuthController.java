@@ -18,7 +18,7 @@ public class AuthController {
 	private UserService userService;
 	
 	@PostMapping("/signup")
-	public ResponseEntity<User> findUserByIdHandler(User user)throws UserException{
+	public ResponseEntity<User> signupHandler(User user)throws UserException{
 		
 		User createdUser = userService.createUser(user);
 		
