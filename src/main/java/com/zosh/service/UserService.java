@@ -10,11 +10,11 @@ public interface UserService {
 	
 	public User createUser(User user) throws UserException;
 	
-	public User findUserByUsername(User user) throws UserException;
+
 	
-	public User findUserById(User user) throws UserException;
+	public User findUserById(Integer Id) throws UserException;
 	
-	public User findUserByEmail(User user) throws UserException;
+	public User findUserByEmail(String email) throws UserException;
 	
 
 }
