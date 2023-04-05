@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.zosh.exception.UserException;
 import com.zosh.modal.User;
 
-@Service
+
 public interface UserService {
 	
 	public User createUser(User user) throws UserException;
