@@ -3,6 +3,8 @@ package com.zosh.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,15 +14,15 @@ import com.zosh.modal.User;
 import com.zosh.service.UserService;
 
 @RestController
-@RequestMapping("/users/api")
+@RequestMapping("/api/users")
 public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/{userId}")
-	public ResponseEntity<User> findUserByIdHandler(User user)throws UserException{
-		
-		User createdUser = userService.createUser(user);
+	@GetMapping("/{userId}")
+	public ResponseEntity<User> findUserByIdHandler(@PathVariable Integer userId)throws UserException{
+		System.out.println("find by user id");
+		User createdUser = userService.findUserById(userId);
 		
 		return new ResponseEntity<User>(createdUser,HttpStatus.ACCEPTED);
 		

@@ -9,24 +9,28 @@ import javax.crypto.SecretKey;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Service;
+
+import com.zosh.modal.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+@Service
 public class JwtUtil {
 	
 	SecretKey key=Keys.hmacShaKeyFor(JwtSecurityContext.JWT_KEY.getBytes());
 	
-	public String generateJwtToken(Authentication authentication) {
+	public String generateJwtToken(User user) {
 		
 		
 		
 		String jwt=Jwts.builder().setIssuer("Code With Zosh")
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime()+86400000))
-				.claim("email", authentication.getName())
-				.claim("authorities", populateAuthorities(authentication.getAuthorities()) )
+				.claim("email", user.getEmail())
+				
 				.signWith(key)
 				.compact();
 		
