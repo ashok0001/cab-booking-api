@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Driver {
@@ -19,12 +20,17 @@ public class Driver {
 	private double latitude;
 	private double longitude;
 	
+	@OneToOne(mappedBy = "driver")
+	private Ride ride;
+	
 	public Driver() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Driver(Integer id, String name, String email, String mobile, double ratig, double latitude,
-			double longitude) {
+	
+
+	public Driver(Integer id, String name, String email, String mobile, double ratig, double latitude, double longitude,
+			Ride ride) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -33,6 +39,18 @@ public class Driver {
 		this.ratig = ratig;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.ride = ride;
+	}
+
+
+
+	public Ride getRide() {
+		return ride;
+	}
+
+
+	public void setRide(Ride ride) {
+		this.ride = ride;
 	}
 
 	public Integer getId() {
