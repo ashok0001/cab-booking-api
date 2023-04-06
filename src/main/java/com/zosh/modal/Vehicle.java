@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -16,7 +17,7 @@ public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "make")
     private String make;
@@ -36,18 +37,17 @@ public class Vehicle {
     @Column(name = "capacity")
     private int capacity;
 
-    @Column(name = "available")
-    private boolean available;
+    @OneToOne
+    private Driver driver;
 
     
     public Vehicle() {
 		// TODO Auto-generated constructor stub
 	}
 
-    
 
-	public Vehicle(Long id, String make, String model, int year, String color, String licensePlate, int capacity,
-			boolean available) {
+	public Vehicle(Integer id, String make, String model, int year, String color, String licensePlate, int capacity,
+			Driver driver) {
 		super();
 		this.id = id;
 		this.make = make;
@@ -56,18 +56,27 @@ public class Vehicle {
 		this.color = color;
 		this.licensePlate = licensePlate;
 		this.capacity = capacity;
-		this.available = available;
+		this.driver = driver;
 	}
 
 
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+
+
+	public Driver getDriver() {
+		return driver;
+	}
+
+
+	public void setDriver(Driver driver) {
+		this.driver = driver;
 	}
 
 
@@ -131,23 +140,8 @@ public class Vehicle {
 	}
 
 
-	public boolean isAvailable() {
-		return available;
-	}
 
 
-	public void setAvailable(boolean available) {
-		this.available = available;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Vehicle [id=" + id + ", make=" + make + ", model=" + model + ", year=" + year + ", color=" + color
-				+ ", licensePlate=" + licensePlate + ", capacity=" + capacity + ", available=" + available + "]";
-	}
-    
     
     
 }

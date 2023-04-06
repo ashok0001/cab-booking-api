@@ -1,5 +1,7 @@
 package com.zosh.modal;
 
+import com.zosh.ride.domain.UserRole;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,13 +20,15 @@ public class User {
 	private String password;
 	private String profilePicture;
 	
+	private UserRole role;
+	
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
-	public User(Integer id, String fullName, String email, String mobile, String password, String profilePicture) {
+	
+	public User(Integer id, String fullName, String email, String mobile, String password, String profilePicture,
+			UserRole role) {
 		super();
 		this.id = id;
 		this.fullName = fullName;
@@ -32,9 +36,16 @@ public class User {
 		this.mobile = mobile;
 		this.password = password;
 		this.profilePicture = profilePicture;
+		this.role = role;
+	}
+	
+	public UserRole getRole() {
+		return role;
 	}
 
-
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
 
 	public Integer getId() {
 		return id;

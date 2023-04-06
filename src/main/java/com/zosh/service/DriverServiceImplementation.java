@@ -2,13 +2,17 @@ package com.zosh.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.zosh.modal.Driver;
 import com.zosh.repository.DriverRepository;
+import com.zosh.request.DriversSignupRequest;
 import com.zosh.ride.domain.RideStatus;
+import com.zosh.ride.domain.UserRole;
 
 @Service
 public class DriverServiceImplementation implements DriverService {
@@ -18,6 +22,9 @@ public class DriverServiceImplementation implements DriverService {
 	
 	@Autowired
 	private Calculaters distenceCalculator;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public List<Driver> getAvailableDrivers(double pickupLatitude, double picupLongitude, double radius) {
@@ -65,6 +72,28 @@ public class DriverServiceImplementation implements DriverService {
 		}
 		// TODO Auto-generated method stub
 		return nearestDriver;
+	}
+
+	@Override
+	public Driver registerDriver(DriversSignupRequest driversSignupRequest) {
+		
+
+		
+		Driver driver = new Driver();
+		
+		String encodedPassword=passwordEncoder.encode(driversSignupRequest.getPassword());
+		
+		driver.setEmail(driversSignupRequest.getEmail());
+		driver.setName(driversSignupRequest.getName());
+		driver.setMobile(driversSignupRequest.getMobile());
+		driver.setPassword(encodedPassword);
+		driver.setLicense(driversSignupRequest.getLicense());
+		driver.setVehicle(driversSignupRequest.getVehicle());
+		driver.setRole(UserRole.DRIVER);
+		
+		
+		
+		return driverRepository.save(driver);
 	}
 
 }
