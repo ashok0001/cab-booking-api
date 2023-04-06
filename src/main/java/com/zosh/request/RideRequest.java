@@ -1,24 +1,48 @@
 package com.zosh.request;
 
+import com.zosh.modal.User;
+
 public class RideRequest {
 	
 	private double pickupLongitude;
 	private double pikupLatitude;
 	private double destinationLongitude;
 	private double destinationLatitude;
+	private User user;
 	
 	public RideRequest() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+
+	
 	public RideRequest(double pickupLongitude, double pikupLatitude, double destinationLongitude,
-			double destinationLatitude) {
+			double destinationLatitude, User user) {
 		super();
 		this.pickupLongitude = pickupLongitude;
 		this.pikupLatitude = pikupLatitude;
 		this.destinationLongitude = destinationLongitude;
 		this.destinationLatitude = destinationLatitude;
+		this.user = user;
 	}
+
+
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+
 
 	public double getPickupLongitude() {
 		return pickupLongitude;

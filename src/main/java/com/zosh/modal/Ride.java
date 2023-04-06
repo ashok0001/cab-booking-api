@@ -23,8 +23,11 @@ public class Ride {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Driver driver; 
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	private RideRequest rideRequest;
+	private double pickupLatitude;
+	private double pickupLongitude;
+	
+	private double destinationLatitude;
+	private double destinationLongitude;
 	
 	private boolean isStarted;
 	private boolean isCompleted;
@@ -35,19 +38,81 @@ public class Ride {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
-	public Ride(Integer id, User user, Driver driver, RideRequest rideRequest, boolean isStarted, boolean isCompleted,
+	public Ride(Integer id, User user, Driver driver, double pickupLatitude, double pickupLongitude,
+			double destinationLatitude, double destinationLongitude, boolean isStarted, boolean isCompleted,
 			double fare) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.driver = driver;
-		this.rideRequest = rideRequest;
+		this.pickupLatitude = pickupLatitude;
+		this.pickupLongitude = pickupLongitude;
+		this.destinationLatitude = destinationLatitude;
+		this.destinationLongitude = destinationLongitude;
 		this.isStarted = isStarted;
 		this.isCompleted = isCompleted;
 		this.fare = fare;
 	}
+
+	public double getPickupLatitude() {
+		return pickupLatitude;
+	}
+
+	public void setPickupLatitude(double pickupLatitude) {
+		this.pickupLatitude = pickupLatitude;
+	}
+
+
+
+
+
+	public double getPickupLongitude() {
+		return pickupLongitude;
+	}
+
+
+
+
+
+	public void setPickupLongitude(double pickupLongitude) {
+		this.pickupLongitude = pickupLongitude;
+	}
+
+
+
+
+
+	public double getDestinationLatitude() {
+		return destinationLatitude;
+	}
+
+
+
+
+
+	public void setDestinationLatitude(double destinationLatitude) {
+		this.destinationLatitude = destinationLatitude;
+	}
+
+
+
+
+
+	public double getDestinationLongitude() {
+		return destinationLongitude;
+	}
+
+
+
+
+
+	public void setDestinationLongitude(double destinationLongitude) {
+		this.destinationLongitude = destinationLongitude;
+	}
+
+
+
+
 
 	public boolean isStarted() {
 		return isStarted;
@@ -93,13 +158,7 @@ public class Ride {
 		this.driver = driver;
 	}
 
-	public RideRequest getRideRequest() {
-		return rideRequest;
-	}
 
-	public void setRideRequest(RideRequest rideRequest) {
-		this.rideRequest = rideRequest;
-	}
 
 	public double getFare() {
 		return fare;
@@ -109,11 +168,6 @@ public class Ride {
 		this.fare = fare;
 	}
 
-	@Override
-	public String toString() {
-		return "Ride [id=" + id + ", user=" + user + ", driver=" + driver + ", rideRequest=" + rideRequest + ", fare="
-				+ fare + "]";
-	}
-	
+
 
 }

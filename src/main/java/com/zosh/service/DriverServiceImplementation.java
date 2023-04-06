@@ -34,7 +34,7 @@ public class DriverServiceImplementation implements DriverService {
 			
 			double distence=distenceCalculator.calculateDistance(driverLatitude,driverLongitude, pickupLatitude, picupLongitude);
 			
-			if(distence<=5) {
+			if(distence<=radius) {
 				availableDriver.add(driver);
 			}
 		}
