@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -47,6 +48,9 @@ public class AuthController {
 	@Autowired
 	private DriverService driverService;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -57,16 +61,9 @@ public class AuthController {
 		
 		
 		
-
-        // Create new user account
-        User user = new User();
-        user.setEmail(signupRequest.getEmail());
-        user.setPassword(signupRequest.getPassword());
-        user.setFullName(signupRequest.getFullName());
-        user.setRole(UserRole.USER);
         
         //userDetailsService.save(user);
-        Optional<User> emailExist = userRepository.findByEmail(user.getEmail());
+        Optional<User> emailExist = userRepository.findByEmail(signupRequest.getEmail());
         
         JwtResponce jwtResponse=new JwtResponce();
         
@@ -79,6 +76,15 @@ public class AuthController {
 	        
 			return new ResponseEntity<JwtResponce>(jwtResponse,HttpStatus.UNAUTHORIZED);
 		}
+        
+		String encodedPassword =passwordEncoder.encode(signupRequest.getPassword());
+
+        // Create new user account
+        User user = new User();
+        user.setEmail(signupRequest.getEmail());
+        user.setPassword(encodedPassword);
+        user.setFullName(signupRequest.getFullName());
+        user.setRole(UserRole.USER);
         
         User createdUser=userRepository.save(user);
         
@@ -98,6 +104,7 @@ public class AuthController {
 		
 	}
 	
+	@PostMapping("/driver/signup")
 	public ResponseEntity<JwtResponce> driverSignupHandler(@RequestBody DriversSignupRequest driverSignupRequest){
 		
 		Optional<Driver> isEmailExist=driverRepository.findByEmail(driverSignupRequest.getEmail());

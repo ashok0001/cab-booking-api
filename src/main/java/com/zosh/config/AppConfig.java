@@ -22,7 +22,7 @@ public class AppConfig  {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.authorizeHttpRequests()
-		.requestMatchers(HttpMethod.POST,"/signup").permitAll()
+		.requestMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
 		.requestMatchers(HttpMethod.GET,"/").permitAll()
 		.anyRequest().authenticated()
 		.and().addFilterBefore(new JwtTokenValidationFilter(), BasicAuthenticationFilter.class)

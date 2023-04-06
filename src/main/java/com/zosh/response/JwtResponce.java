@@ -22,6 +22,10 @@ public class JwtResponce {
 		this.errorDetails = errorDetails;
 	}
 
+	public String getErrorDetails() {
+		return errorDetails;
+	}
+
 	public String getJwt() {
 		return jwt;
 	}
