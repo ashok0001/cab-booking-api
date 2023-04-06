@@ -1,5 +1,7 @@
 package com.zosh.response;
 
+import com.zosh.ride.domain.UserRole;
+
 public class JwtResponce {
 	
 	private String jwt;
@@ -7,19 +9,30 @@ public class JwtResponce {
 	private boolean isAuthenticated;
 	private boolean isError;
 	private String errorDetails;
+	private UserRole type;
 	
 	
 	public JwtResponce() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public JwtResponce(String jwt, String message, boolean isAuthenticated, boolean isError, String errorDetails) {
+
+	public JwtResponce(String jwt, String message, boolean isAuthenticated, boolean isError, String errorDetails,
+			UserRole type) {
 		super();
 		this.jwt = jwt;
 		this.message = message;
 		this.isAuthenticated = isAuthenticated;
 		this.isError = isError;
 		this.errorDetails = errorDetails;
+		this.type = type;
+	}
+
+	public UserRole getType() {
+		return type;
+	}
+
+	public void setType(UserRole type) {
+		this.type = type;
 	}
 
 	public String getErrorDetails() {

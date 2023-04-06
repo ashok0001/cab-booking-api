@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.zosh.modal.Driver;
 import com.zosh.modal.Ride;
 import com.zosh.modal.User;
+import com.zosh.repository.DriverRepository;
 import com.zosh.repository.RideRepository;
 import com.zosh.request.RideRequest;
 import com.zosh.ride.domain.RideStatus;
@@ -24,6 +25,9 @@ public class RideServiceImplementation implements RideService {
 	
 	@Autowired
 	private Calculaters calculaters;
+	
+	@Autowired
+	private DriverRepository driverRepository;
 
 	@Override
 	public Ride requestRide(RideRequest rideRequest) {
@@ -78,6 +82,12 @@ public class RideServiceImplementation implements RideService {
 		
 		ride.setStatus(RideStatus.ACCEPTED);
 		
+		Driver driver = ride.getDriver();
+		
+		driver.setCurrentRide(ride);
+		
+		driverRepository.save(driver);
+		
 		rideRepository.save(ride);
 		// TODO Auto-generated method stub
 		
@@ -110,6 +120,12 @@ public class RideServiceImplementation implements RideService {
 		ride.setFare(fare);
 		ride.setDuration(duration);
 		
+		
+		Driver driver =ride.getDriver();
+		driver.getRides().add(ride);
+		driver.setCurrentRide(null);
+		
+		driverRepository.save(driver);
 		rideRepository.save(ride);
 		
 	}

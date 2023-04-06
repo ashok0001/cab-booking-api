@@ -1,11 +1,14 @@
 package com.zosh.modal;
 
+import java.util.List;
+
 import com.zosh.ride.domain.UserRole;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -29,18 +32,22 @@ public class Driver {
 	@OneToOne(mappedBy = "driver")
 	private License license;
 	
-	@OneToOne(mappedBy = "driver")
-	private Ride ride;
+	@OneToMany(mappedBy = "driver")
+	private List<Ride> rides;
 	
 	@OneToOne(mappedBy="driver")
 	private Vehicle vehicle;
 	
+	@OneToOne(mappedBy="driver")
+	private Ride currentRide;
+
+	
 	public Driver() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Driver(Integer id, String name, String email, String mobile, double ratig, double latitude, double longitude,
-			UserRole role, String password, License license, Ride ride, Vehicle vehicle) {
+			UserRole role, String password, License license, List<Ride> rides, Vehicle vehicle, Ride currentRide) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -52,8 +59,25 @@ public class Driver {
 		this.role = role;
 		this.password = password;
 		this.license = license;
-		this.ride = ride;
+		this.rides = rides;
 		this.vehicle = vehicle;
+		this.currentRide = currentRide;
+	}
+
+	public Ride getCurrentRide() {
+		return currentRide;
+	}
+
+	public void setCurrentRide(Ride currentRide) {
+		this.currentRide = currentRide;
+	}
+
+	public List<Ride> getRides() {
+		return rides;
+	}
+
+	public void setRides(List<Ride> rides) {
+		this.rides = rides;
 	}
 
 	public UserRole getRole() {
@@ -86,13 +110,6 @@ public class Driver {
 
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
-	}
-
-	public Ride getRide() {
-		return ride;
-	}
-	public void setRide(Ride ride) {
-		this.ride = ride;
 	}
 
 	public Integer getId() {

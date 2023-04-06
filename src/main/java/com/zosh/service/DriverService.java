@@ -2,6 +2,7 @@ package com.zosh.service;
 
 import java.util.List;
 
+import com.zosh.exception.DriverException;
 import com.zosh.modal.Driver;
 import com.zosh.request.DriversSignupRequest;
 
@@ -13,6 +14,7 @@ public interface DriverService {
 	
 	public Driver findNearestDriver(List<Driver> availableDrivers, double picupLatitude, double picupLongitude);
 	
+	public Driver getReqDriverProfile(String jwt) throws DriverException;
 	
 
 

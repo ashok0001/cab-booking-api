@@ -20,7 +20,15 @@ public class GlobleException {
 		return new ResponseEntity<ErrorDetails>(err,HttpStatus.ACCEPTED);
 		
 	}
-	
+	@ExceptionHandler(DriverException.class)
+	public ResponseEntity<ErrorDetails> driverrExceptionHandler(DriverException ue, WebRequest req){
+		
+		ErrorDetails err=new ErrorDetails(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
+		
+		
+		return new ResponseEntity<ErrorDetails>(err,HttpStatus.ACCEPTED);
+		
+	}
 	
 	
 	

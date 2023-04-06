@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.zosh.config.JwtUtil;
+import com.zosh.exception.DriverException;
 import com.zosh.modal.Driver;
 import com.zosh.repository.DriverRepository;
 import com.zosh.request.DriversSignupRequest;
@@ -25,6 +27,9 @@ public class DriverServiceImplementation implements DriverService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	@Override
 	public List<Driver> getAvailableDrivers(double pickupLatitude, double picupLongitude, double radius) {
@@ -34,7 +39,7 @@ public class DriverServiceImplementation implements DriverService {
 		
 		for(Driver driver:allDrivers) {
 			
-			if(driver.getRide()!=null && driver.getRide().getStatus()!=RideStatus.COMPLETED) {
+			if(driver.getCurrentRide()!=null && driver.getCurrentRide().getStatus()!=RideStatus.COMPLETED) {
 				continue;
 			}
 			
@@ -89,11 +94,27 @@ public class DriverServiceImplementation implements DriverService {
 		driver.setPassword(encodedPassword);
 		driver.setLicense(driversSignupRequest.getLicense());
 		driver.setVehicle(driversSignupRequest.getVehicle());
-		driver.setRole(UserRole.DRIVER);
+		driver.setRole(UserRole.DRIVER) ;
 		
 		
 		
 		return driverRepository.save(driver);
+	}
+
+	@Override
+	public Driver getReqDriverProfile(String jwt) throws DriverException {
+		String email =jwtUtil.getEmailFromToken(jwt);
+		
+		if(email==null) {
+			throw new DriverException("invalid token");
+		}
+		
+		Optional<Driver> opt = driverRepository.findByEmail(email);
+		
+		if(opt.isPresent()) {
+			return opt.get();
+		}
+		return null;
 	}
 
 }

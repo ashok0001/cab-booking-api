@@ -23,7 +23,9 @@ import com.zosh.exception.UserException;
 import com.zosh.modal.Driver;
 import com.zosh.modal.User;
 import com.zosh.repository.DriverRepository;
+import com.zosh.repository.LicenseRepository;
 import com.zosh.repository.UserRepository;
+import com.zosh.repository.VehicleRepository;
 import com.zosh.request.DriversSignupRequest;
 import com.zosh.request.LoginRequest;
 import com.zosh.request.SignupRequest;
@@ -50,6 +52,12 @@ public class AuthController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private VehicleRepository vehicleRepository;
+	
+	@Autowired
+	private LicenseRepository licenseRepository;
 	
 	
 	@Autowired
@@ -96,6 +104,7 @@ public class AuthController {
         jwtResponse.setAuthenticated(true);
         jwtResponse.setError(false);
         jwtResponse.setErrorDetails(null);
+        jwtResponse.setType(UserRole.USER);
         jwtResponse.setMessage("Account Created Successfully: "+createdUser.getFullName());
         
 
@@ -120,6 +129,9 @@ public class AuthController {
 			return new ResponseEntity<JwtResponce>(jwtResponse,HttpStatus.BAD_REQUEST);
 		}
 		
+		licenseRepository.save(driverSignupRequest.getLicense());
+		vehicleRepository.save(driverSignupRequest.getVehicle());
+		
 		Driver createdDriver=driverService.registerDriver(driverSignupRequest);
 		
 		User user=new User();
@@ -131,6 +143,7 @@ public class AuthController {
         jwtResponse.setAuthenticated(true);
         jwtResponse.setError(false);
         jwtResponse.setErrorDetails(null);
+        jwtResponse.setType(UserRole.DRIVER);
         jwtResponse.setMessage("Account Created Successfully: "+createdDriver.getName());
         
         
