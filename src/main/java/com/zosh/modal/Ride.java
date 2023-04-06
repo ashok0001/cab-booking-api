@@ -26,20 +26,48 @@ public class Ride {
 	@OneToOne(fetch = FetchType.LAZY)
 	private RideRequest rideRequest;
 	
+	private boolean isStarted;
+	private boolean isCompleted;
+	
 	private double fare;
 	
 	public Ride() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ride(Integer id, User user, Driver driver, RideRequest rideRequest, double fare) {
+	
+
+	public Ride(Integer id, User user, Driver driver, RideRequest rideRequest, boolean isStarted, boolean isCompleted,
+			double fare) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.driver = driver;
 		this.rideRequest = rideRequest;
+		this.isStarted = isStarted;
+		this.isCompleted = isCompleted;
 		this.fare = fare;
 	}
+
+	public boolean isStarted() {
+		return isStarted;
+	}
+
+	public void setStarted(boolean isStarted) {
+		this.isStarted = isStarted;
+	}
+
+	public boolean isCompleted() {
+		return isCompleted;
+	}
+
+
+
+	public void setCompleted(boolean isCompleted) {
+		this.isCompleted = isCompleted;
+	}
+
+
 
 	public Integer getId() {
 		return id;
