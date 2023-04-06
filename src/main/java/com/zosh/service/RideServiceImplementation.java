@@ -1,5 +1,6 @@
 package com.zosh.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.zosh.modal.Ride;
 import com.zosh.modal.User;
 import com.zosh.repository.RideRepository;
 import com.zosh.request.RideRequest;
+import com.zosh.ride.domain.RideStatus;
 
 @Service
 public class RideServiceImplementation implements RideService {
@@ -19,6 +21,9 @@ public class RideServiceImplementation implements RideService {
 	
 	@Autowired
 	private RideRepository rideRepository;
+	
+	@Autowired
+	private Calculaters calculaters;
 
 	@Override
 	public Ride requestRide(RideRequest rideRequest) {
@@ -62,9 +67,59 @@ public class RideServiceImplementation implements RideService {
 		ride.setPickupLongitude(pickupLongitude);
 		ride.setDestinationLatitude(destinationLatitude);
 		ride.setDestinationLongitude(destinationLongitude);
+		ride.setStatus(RideStatus.REQUESTED);
 		
 		
 		return rideRepository.save(ride);
+	}
+
+	@Override
+	public void acceptRide(Ride ride) {
+		
+		ride.setStatus(RideStatus.ACCEPTED);
+		
+		rideRepository.save(ride);
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void startRide(Ride ride) {
+		
+		ride.setStatus(RideStatus.STARTED);
+		rideRepository.save(ride);
+	
+		
+	}
+
+	
+
+	@Override
+	public void completeRide(Ride ride) {
+		
+		ride.setStatus(RideStatus.COMPLETED);
+		ride.setEndTime(LocalDateTime.now());;
+		
+		double distence=calculaters.calculateDistance(ride.getDestinationLatitude(), ride.getDestinationLongitude(), ride.getPickupLatitude(), ride.getPickupLongitude());
+		
+		long duration=calculaters.calculateDuration(ride.getStartTime(), ride.getEndTime());
+		
+		double fare=calculaters.calculateFare(distence);
+		
+		ride.setDistence(distence);
+		ride.setFare(fare);
+		ride.setDuration(duration);
+		
+		rideRepository.save(ride);
+		
+	}
+	
+	@Override
+	public void cancleRide(Ride ride) {
+		ride.setStatus(RideStatus.CANCELLED);
+		rideRepository.save(ride);
+		
+		
 	}
 
 }

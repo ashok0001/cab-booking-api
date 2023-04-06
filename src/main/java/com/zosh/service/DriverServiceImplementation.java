@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zosh.modal.Driver;
 import com.zosh.repository.DriverRepository;
+import com.zosh.ride.domain.RideStatus;
 
 @Service
 public class DriverServiceImplementation implements DriverService {
@@ -15,7 +16,8 @@ public class DriverServiceImplementation implements DriverService {
 	@Autowired
 	private DriverRepository driverRepository;
 	
-	private DistenceCalculater distenceCalculator;
+	@Autowired
+	private Calculaters distenceCalculator;
 
 	@Override
 	public List<Driver> getAvailableDrivers(double pickupLatitude, double picupLongitude, double radius) {
@@ -25,7 +27,7 @@ public class DriverServiceImplementation implements DriverService {
 		
 		for(Driver driver:allDrivers) {
 			
-			if(driver.getRide()!=null && !driver.getRide().isCompleted()) {
+			if(driver.getRide()!=null && driver.getRide().getStatus()!=RideStatus.COMPLETED) {
 				continue;
 			}
 			

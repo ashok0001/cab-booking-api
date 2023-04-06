@@ -1,5 +1,9 @@
 package com.zosh.modal;
 
+import java.time.LocalDateTime;
+
+import com.zosh.ride.domain.RideStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,8 +33,15 @@ public class Ride {
 	private double destinationLatitude;
 	private double destinationLongitude;
 	
-	private boolean isStarted;
-	private boolean isCompleted;
+	private double distence;
+	
+	private double duration;
+	
+	private RideStatus status;
+	
+	private LocalDateTime startTime;
+	
+	private LocalDateTime endTime;
 	
 	private double fare;
 	
@@ -38,9 +49,10 @@ public class Ride {
 		// TODO Auto-generated constructor stub
 	}
 
+
 	public Ride(Integer id, User user, Driver driver, double pickupLatitude, double pickupLongitude,
-			double destinationLatitude, double destinationLongitude, boolean isStarted, boolean isCompleted,
-			double fare) {
+			double destinationLatitude, double destinationLongitude, double distence, double duration,
+			RideStatus status, LocalDateTime startTime, LocalDateTime endTime, double fare) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -49,9 +61,67 @@ public class Ride {
 		this.pickupLongitude = pickupLongitude;
 		this.destinationLatitude = destinationLatitude;
 		this.destinationLongitude = destinationLongitude;
-		this.isStarted = isStarted;
-		this.isCompleted = isCompleted;
+		this.distence = distence;
+		this.duration = duration;
+		this.status = status;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.fare = fare;
+	}
+
+
+	public LocalDateTime getStartTime() {
+		return startTime;
+	}
+
+
+	public void setStartTime(LocalDateTime startTime) {
+		this.startTime = startTime;
+	}
+
+
+	public LocalDateTime getEndTime() {
+		return endTime;
+	}
+
+
+	public void setEndTime(LocalDateTime endTime) {
+		this.endTime = endTime;
+	}
+
+
+	public double getDistence() {
+		return distence;
+	}
+
+
+
+	public void setDistence(double distence) {
+		this.distence = distence;
+	}
+
+
+
+	public double getDuration() {
+		return duration;
+	}
+
+
+
+	public void setDuration(double duration) {
+		this.duration = duration;
+	}
+
+
+
+	public RideStatus getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(RideStatus status) {
+		this.status = status;
 	}
 
 	public double getPickupLatitude() {
@@ -61,78 +131,27 @@ public class Ride {
 	public void setPickupLatitude(double pickupLatitude) {
 		this.pickupLatitude = pickupLatitude;
 	}
-
-
-
-
-
 	public double getPickupLongitude() {
 		return pickupLongitude;
 	}
-
-
-
-
-
 	public void setPickupLongitude(double pickupLongitude) {
 		this.pickupLongitude = pickupLongitude;
 	}
-
-
-
-
 
 	public double getDestinationLatitude() {
 		return destinationLatitude;
 	}
 
-
-
-
-
 	public void setDestinationLatitude(double destinationLatitude) {
 		this.destinationLatitude = destinationLatitude;
 	}
-
-
-
-
-
 	public double getDestinationLongitude() {
 		return destinationLongitude;
 	}
 
-
-
-
-
 	public void setDestinationLongitude(double destinationLongitude) {
 		this.destinationLongitude = destinationLongitude;
 	}
-
-
-
-
-
-	public boolean isStarted() {
-		return isStarted;
-	}
-
-	public void setStarted(boolean isStarted) {
-		this.isStarted = isStarted;
-	}
-
-	public boolean isCompleted() {
-		return isCompleted;
-	}
-
-
-
-	public void setCompleted(boolean isCompleted) {
-		this.isCompleted = isCompleted;
-	}
-
-
 
 	public Integer getId() {
 		return id;

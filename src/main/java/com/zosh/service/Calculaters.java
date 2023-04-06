@@ -1,9 +1,13 @@
 package com.zosh.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+
 @Service
-public class DistenceCalculater {
+public class Calculaters {
 	
 	 private static final int EARTH_RADIUS = 6371; // Radius of the Earth in kilometers
 	 
@@ -22,5 +26,16 @@ public class DistenceCalculater {
 	     double distance = EARTH_RADIUS * c;
 	     return distance;
 	 }
+	 
+	 public long calculateDuration(LocalDateTime startTime, LocalDateTime endTime) {
+	        Duration duration = Duration.between(startTime, endTime);
+	        return duration.getSeconds();
+	    }
+	 
+	 public double calculateFare(double distance) {
+	        double baseFare = 11;
+	        double totalFare=baseFare*distance;
+	        return totalFare;
+	    }
 
 }
