@@ -22,15 +22,14 @@ public class JwtUtil {
 	
 	SecretKey key=Keys.hmacShaKeyFor(JwtSecurityContext.JWT_KEY.getBytes());
 	
-	public String generateJwtToken(User user) {
+	public String generateJwtToken(Authentication authentication) {
 		
 		
 		
 		String jwt=Jwts.builder().setIssuer("Code With Zosh")
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime()+86400000))
-				.claim("email", user.getEmail())
-				
+				.claim("email", authentication.getName())
 				.signWith(key)
 				.compact();
 		
@@ -38,10 +37,13 @@ public class JwtUtil {
 	}
 	
 	public String getEmailFromToken(String token) {
+		System.out.println("before claims ----------- ");
 
-		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+		token=token.substring(7);
 		
-		String email = String.valueOf(claims.get("email"));
+		Claims claims= Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+		
+		String email= String.valueOf(claims.get("email"));
 		
 		return email;
     }

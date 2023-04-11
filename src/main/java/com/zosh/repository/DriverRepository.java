@@ -8,6 +8,6 @@ import com.zosh.modal.Driver;
 
 public interface DriverRepository extends JpaRepository<Driver, Integer> {
 	
-	public Optional<Driver> findByEmail(String email);
+	public Driver findByEmail(String email);
 
 }

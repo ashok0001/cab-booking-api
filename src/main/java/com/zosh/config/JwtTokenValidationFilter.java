@@ -73,7 +73,7 @@ String jwt= request.getHeader(JwtSecurityContext.JWT_HEADER);
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 	
-		return request.getServletPath().equals("/signin");
+		return request.getServletPath().equals("/api/auth/user/signin");
 	}
 
 	

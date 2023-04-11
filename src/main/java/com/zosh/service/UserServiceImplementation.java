@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zosh.config.JwtUtil;
 import com.zosh.exception.UserException;
 import com.zosh.modal.User;
 import com.zosh.repository.UserRepository;
@@ -15,6 +16,9 @@ public class UserServiceImplementation implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	@Override
 	public User createUser(User user) throws UserException {
@@ -45,12 +49,28 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public User findUserByEmail(String email) throws UserException {
 		
-		Optional<User> opt=userRepository.findByEmail(email);
+		User user=userRepository.findByEmail(email);
 		
-		if(opt.isPresent()) {
-			return opt.get();
+		if(user!=null) {
+			return user;
 		}
 		throw new UserException("user not found with email "+email);
+	}
+
+
+
+	@Override
+	public User getReqUserProfile(String token) throws UserException {
+		
+		String email = jwtUtil.getEmailFromToken(token);
+		User user = userRepository.findByEmail(email);
+		 
+		if(user!=null) {
+			return user;
+		}
+		
+		throw new UserException("invalid token...");
+		
 	}
 
 }

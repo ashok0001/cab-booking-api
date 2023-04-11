@@ -23,9 +23,10 @@ public class AppConfig  {
 		.and()
 		.authorizeHttpRequests()
 		.requestMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
-		.requestMatchers(HttpMethod.GET,"/").permitAll()
+		.requestMatchers(HttpMethod.GET,"/swagger-ul/**","/").permitAll()
 		.anyRequest().authenticated()
 		.and().addFilterBefore(new JwtTokenValidationFilter(), BasicAuthenticationFilter.class)
+		
 		.csrf().disable().httpBasic().and().formLogin();
 		
 		return http.build();

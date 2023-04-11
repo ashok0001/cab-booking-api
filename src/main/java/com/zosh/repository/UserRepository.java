@@ -8,5 +8,5 @@ import com.zosh.modal.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-	public Optional<User> findByEmail(String email);
+	public User findByEmail(String email);
 }

@@ -1,8 +1,15 @@
 package com.zosh.request;
 
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class SignupRequest {
 	
+	@NotBlank(message= "Email is Required")
+	@Email(message = "Email should be valid")
 	private String email;
+	
 	
 	private String fullName;
 	

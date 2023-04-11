@@ -103,18 +103,26 @@ public class DriverServiceImplementation implements DriverService {
 
 	@Override
 	public Driver getReqDriverProfile(String jwt) throws DriverException {
+		
+		System.out.println("before jwtUtil ----------- "+jwt);
+		
 		String email =jwtUtil.getEmailFromToken(jwt);
 		
-		if(email==null) {
-			throw new DriverException("invalid token");
+//		String email="hipo@gmail.com";
+		
+		System.out.println("email - "+email);
+		
+//		if(email==null) {
+//			throw new DriverException("invalid token");
+//		}
+		
+		Driver driver = driverRepository.findByEmail(email);
+		
+		if(driver==null) {
+			throw new DriverException("driver not exist with email id");
 		}
 		
-		Optional<Driver> opt = driverRepository.findByEmail(email);
-		
-		if(opt.isPresent()) {
-			return opt.get();
-		}
-		return null;
+		return driver;
 	}
 
 }
