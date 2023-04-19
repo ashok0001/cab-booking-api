@@ -5,44 +5,31 @@ import com.zosh.modal.User;
 public class RideRequest {
 	
 	private double pickupLongitude;
-	private double pikupLatitude;
+	private double pickupLatitude;
 	private double destinationLongitude;
 	private double destinationLatitude;
-	private User user;
+	
 	
 	public RideRequest() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
-	
-	public RideRequest(double pickupLongitude, double pikupLatitude, double destinationLongitude,
-			double destinationLatitude, User user) {
+	public RideRequest(double pickupLongitude, double pickupLatitude, double destinationLongitude,
+			double destinationLatitude) {
 		super();
 		this.pickupLongitude = pickupLongitude;
-		this.pikupLatitude = pikupLatitude;
+		this.pickupLatitude = pickupLatitude;
 		this.destinationLongitude = destinationLongitude;
 		this.destinationLatitude = destinationLatitude;
-		this.user = user;
 	}
 
-
-
-
-	public User getUser() {
-		return user;
+	public double getPickupLatitude() {
+		return pickupLatitude;
 	}
 
-
-
-
-	public void setUser(User user) {
-		this.user = user;
+	public void setPickupLatitude(double pickupLatitude) {
+		this.pickupLatitude = pickupLatitude;
 	}
-
-
-
 
 	public double getPickupLongitude() {
 		return pickupLongitude;
@@ -50,12 +37,7 @@ public class RideRequest {
 	public void setPickupLongitude(double pickupLongitude) {
 		this.pickupLongitude = pickupLongitude;
 	}
-	public double getPikupLatitude() {
-		return pikupLatitude;
-	}
-	public void setPikupLatitude(double pikupLatitude) {
-		this.pikupLatitude = pikupLatitude;
-	}
+	
 	public double getDestinationLongitude() {
 		return destinationLongitude;
 	}
@@ -69,13 +51,7 @@ public class RideRequest {
 		this.destinationLatitude = destinationLatitude;
 	}
 
-	@Override
-	public String toString() {
-		return "RideRequest [pickupLongitude=" + pickupLongitude + ", pikupLatitude=" + pikupLatitude
-				+ ", destinationLongitude=" + destinationLongitude + ", destinationLatitude=" + destinationLatitude
-				+ "]";
-	}
-	
+
 	
 
 }

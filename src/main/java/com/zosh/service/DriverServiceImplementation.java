@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 import com.zosh.config.JwtUtil;
 import com.zosh.exception.DriverException;
 import com.zosh.modal.Driver;
+import com.zosh.modal.License;
+import com.zosh.modal.Vehicle;
 import com.zosh.repository.DriverRepository;
+import com.zosh.repository.LicenseRepository;
+import com.zosh.repository.VehicleRepository;
 import com.zosh.request.DriversSignupRequest;
 import com.zosh.ride.domain.RideStatus;
 import com.zosh.ride.domain.UserRole;
@@ -30,6 +34,12 @@ public class DriverServiceImplementation implements DriverService {
 	
 	@Autowired
 	private JwtUtil jwtUtil;
+	
+	@Autowired
+	private VehicleRepository vehicleRepository;
+	
+	@Autowired
+	private LicenseRepository licenseRepository;
 
 	@Override
 	public List<Driver> getAvailableDrivers(double pickupLatitude, double picupLongitude, double radius) {
@@ -75,54 +85,71 @@ public class DriverServiceImplementation implements DriverService {
 				nearestDriver=driver;
 			}
 		}
-		// TODO Auto-generated method stub
+		
 		return nearestDriver;
 	}
 
 	@Override
 	public Driver registerDriver(DriversSignupRequest driversSignupRequest) {
-		
 
+		License license=driversSignupRequest.getLicense();
+		Vehicle vehicle=driversSignupRequest.getVehicle();
+		
+		License createdLicense=new License();
+		
+		createdLicense.setLicenseState(license.getLicenseState());
+		createdLicense.setLicenseNumber(license.getLicenseNumber());
+		createdLicense.setLicenseExpirationDate(license.getLicenseExpirationDate());
+		createdLicense.setId(license.getId());
+		
+		License savedLicense=licenseRepository.save(createdLicense);
+		
+		Vehicle createdVehicle = new Vehicle();
+		
+		createdVehicle.setCapacity(vehicle.getCapacity());
+		createdVehicle.setColor(vehicle.getColor());
+		createdVehicle.setId(vehicle.getId());
+		createdVehicle.setLicensePlate(vehicle.getLicensePlate());
+		createdVehicle.setMake(vehicle.getMake());
+		createdVehicle.setModel(vehicle.getModel());
+		createdVehicle.setYear(vehicle.getYear());
+		
+		Vehicle savedVehicle = vehicleRepository.save(createdVehicle);
 		
 		Driver driver = new Driver();
 		
-		String encodedPassword=passwordEncoder.encode(driversSignupRequest.getPassword());
+		String encodedPassword = passwordEncoder.encode(driversSignupRequest.getPassword());
 		
 		driver.setEmail(driversSignupRequest.getEmail());
 		driver.setName(driversSignupRequest.getName());
 		driver.setMobile(driversSignupRequest.getMobile());
 		driver.setPassword(encodedPassword);
-		driver.setLicense(driversSignupRequest.getLicense());
-		driver.setVehicle(driversSignupRequest.getVehicle());
+		driver.setLicense(savedLicense);
+		driver.setVehicle(savedVehicle);
 		driver.setRole(UserRole.DRIVER) ;
 		
+		driver.setLatitude(driversSignupRequest.getLatitude());
+		driver.setLongitude(driversSignupRequest.getLongitude());
 		
 		
-		return driverRepository.save(driver);
+		Driver createdDriver = driverRepository.save(driver);
+		
+		savedLicense.setDriver(createdDriver);
+		savedVehicle.setDriver(createdDriver);
+		
+		licenseRepository.save(savedLicense);
+		vehicleRepository.save(savedVehicle);
+		
+		return createdDriver;
+			
 	}
 
 	@Override
 	public Driver getReqDriverProfile(String jwt) throws DriverException {
-		
-		System.out.println("before jwtUtil ----------- "+jwt);
-		
-		String email =jwtUtil.getEmailFromToken(jwt);
-		
-//		String email="hipo@gmail.com";
-		
-		System.out.println("email - "+email);
-		
-//		if(email==null) {
-//			throw new DriverException("invalid token");
-//		}
-		
-		Driver driver = driverRepository.findByEmail(email);
-		
-		if(driver==null) {
-			throw new DriverException("driver not exist with email id");
-		}
-		
-		return driver;
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	
 
 }

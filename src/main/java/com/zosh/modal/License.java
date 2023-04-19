@@ -1,5 +1,8 @@
 package com.zosh.modal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,18 +22,29 @@ public class License {
 	
 	private String licenseExpirationDate;
 	
-	@OneToOne
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
 	private Driver driver;
 
 	public License() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public License(String licenseNumber, String licenseState, String licenseExpirationDate) {
+
+	public License(Integer id, String licenseNumber, String licenseState, String licenseExpirationDate, Driver driver) {
 		super();
+		this.id = id;
 		this.licenseNumber = licenseNumber;
 		this.licenseState = licenseState;
 		this.licenseExpirationDate = licenseExpirationDate;
+		this.driver = driver;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getLicenseNumber() {
@@ -56,7 +70,13 @@ public class License {
 	public void setLicenseExpirationDate(String licenseExpirationDate) {
 		this.licenseExpirationDate = licenseExpirationDate;
 	}
-	
-	
 
+	public Driver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(Driver driver) {
+		this.driver = driver;
+	}
+	
 }

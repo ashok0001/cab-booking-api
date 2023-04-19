@@ -1,5 +1,8 @@
 package com.zosh.modal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +40,8 @@ public class Vehicle {
     @Column(name = "capacity")
     private int capacity;
 
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
     private Driver driver;
 
     

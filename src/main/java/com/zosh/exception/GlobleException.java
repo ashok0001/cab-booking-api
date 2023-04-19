@@ -26,16 +26,24 @@ public class GlobleException {
 		
 	}
 
-//	@ExceptionHandler(DriverException.class)
-//	public ResponseEntity<ErrorDetails> driverrExceptionHandler(DriverException ue, WebRequest req){
-//		
-//		ErrorDetails err=new ErrorDetails(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
-//		
-//		
-//		return new ResponseEntity<ErrorDetails>(err,HttpStatus.ACCEPTED);
-//		
-//	}
-//	
+	@ExceptionHandler(DriverException.class)
+	public ResponseEntity<ErrorDetails> driverrExceptionHandler(DriverException ue, WebRequest req){
+		
+		ErrorDetails err=new ErrorDetails(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
+		
+		
+		return new ResponseEntity<ErrorDetails>(err,HttpStatus.ACCEPTED);
+		
+	}
+	@ExceptionHandler(RideException.class)
+	public ResponseEntity<ErrorDetails> RideExceptionHandler(RideException ue, WebRequest req){
+		
+		ErrorDetails err=new ErrorDetails(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
+		
+		
+		return new ResponseEntity<ErrorDetails>(err,HttpStatus.ACCEPTED);
+		
+	}
 
 	
 	@ExceptionHandler(ConstraintViolationException.class)
@@ -74,7 +82,7 @@ public class GlobleException {
 	
 	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorDetails> otherExceptionHandler(UserException ue, WebRequest req){
+	public ResponseEntity<ErrorDetails> otherExceptionHandler(Exception ue, WebRequest req){
 		
 		ErrorDetails err=new ErrorDetails(ue.getMessage(),req.getDescription(false), LocalDateTime.now());
 		

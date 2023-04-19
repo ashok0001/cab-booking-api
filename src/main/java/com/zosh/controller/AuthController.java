@@ -17,12 +17,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.zosh.config.JwtUtil;
 import com.zosh.exception.UserException;
 import com.zosh.modal.Driver;
+import com.zosh.modal.License;
 import com.zosh.modal.User;
+import com.zosh.modal.Vehicle;
 import com.zosh.repository.DriverRepository;
 import com.zosh.repository.LicenseRepository;
 import com.zosh.repository.UserRepository;
@@ -32,6 +35,7 @@ import com.zosh.request.LoginRequest;
 import com.zosh.request.SignupRequest;
 import com.zosh.response.JwtResponce;
 import com.zosh.ride.domain.UserRole;
+import com.zosh.service.CustomDriverUserDetailsService;
 import com.zosh.service.CustomUserDetailsService;
 import com.zosh.service.DriverService;
 import com.zosh.service.UserService;
@@ -41,9 +45,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -58,23 +59,16 @@ public class AuthController {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private VehicleRepository vehicleRepository;
-	
-	@Autowired
-	private LicenseRepository licenseRepository;
-	
-	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
-	
 	
 	@Autowired
 	private JwtUtil jwtUtil;
 	
+	
+	
 	@PostMapping("/user/signup")
 	public ResponseEntity<JwtResponce> signupHandler(@Valid @RequestBody SignupRequest signupRequest)throws UserException, AuthenticationException{
 		
-
-        
         User user = userRepository.findByEmail(signupRequest.getEmail());
         
         JwtResponce jwtResponse=new JwtResponce();
@@ -108,9 +102,7 @@ public class AuthController {
         jwtResponse.setType(UserRole.USER);
         jwtResponse.setMessage("Account Created Successfully: "+savedUser.getFullName());
         
-
         return new ResponseEntity<JwtResponce>(jwtResponse,HttpStatus.ACCEPTED);
-    
 		
 	}
 	
@@ -121,7 +113,7 @@ public class AuthController {
 		
 		JwtResponce jwtResponse=new JwtResponce();
 			
-		if(driver==null) {
+		if(driver!=null) {
 			
 			jwtResponse.setAuthenticated(false);
 		    jwtResponse.setErrorDetails("email already used with another account");
@@ -130,8 +122,8 @@ public class AuthController {
 			return new ResponseEntity<JwtResponce>(jwtResponse,HttpStatus.BAD_REQUEST);
 		}
 		
-		licenseRepository.save(driverSignupRequest.getLicense());
-		vehicleRepository.save(driverSignupRequest.getVehicle());
+		
+		
 		
 		Driver createdDriver=driverService.registerDriver(driverSignupRequest);
 		
@@ -157,8 +149,6 @@ public class AuthController {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
         
-        System.out.println(username +" ----- "+password);
-        
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
@@ -176,9 +166,10 @@ public class AuthController {
     }
 	
 	private Authentication authenticate(String username, String password) {
+		System.out.println("sign in userDetails - "+password);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-        
-        System.out.println("sign in userDetails - "+userDetails);
+
+        System.out.println("sign in userDetails after loaduser- "+userDetails);
         
         if (userDetails == null) {
         	System.out.println("sign in userDetails - null " + userDetails);
@@ -190,39 +181,9 @@ public class AuthController {
         }
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
-
 	
-//	@GetMapping("/user/signin")
-//	public ResponseEntity<JwtResponce> driverSigninHandler(HttpServletRequest request) throws UserException{
-//		
-//        String username = request.getHeader("username");
-//        String password = request.getHeader("password");
-//        
-//        // Validate username and password
-////        User user = userService.getUserByUsername(username);
-//        
-//        User user = userRepository.findByEmail(username);
-//        
-//        
-//        if(user==null) {
-//        	throw new UserException("user not found with email "+username);
-//        	
-//        }
-//        
-//        if (!passwordEncoder.matches(password, user.getPassword())) {
-//        	throw new BadCredentialsException("Invalid username or password");
-//        }
-//        
-//        String jwt = jwtUtil.generateJwtToken(user);
-//        	
-//        JwtResponce jwtResponse=new JwtResponce();
-//        jwtResponse.setError(false);
-//        jwtResponse.setAuthenticated(true);
-//        jwtResponse.setJwt(jwt);
-//        
-//    
-//        return new ResponseEntity<JwtResponce>(jwtResponse,HttpStatus.ACCEPTED);
-//		
-//		
-//	}
+	
+	
+
+
 }

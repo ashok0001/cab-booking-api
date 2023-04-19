@@ -2,8 +2,10 @@ package com.zosh.modal;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zosh.ride.domain.UserRole;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,16 +31,20 @@ public class Driver {
 	
 	private String password;
 	
-	@OneToOne(mappedBy = "driver")
+	
+	@OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
 	private License license;
 	
-	@OneToMany(mappedBy = "driver")
+	@JsonIgnore
+	@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
 	private List<Ride> rides;
 	
-	@OneToOne(mappedBy="driver")
+	
+	@OneToOne(mappedBy="driver",cascade = CascadeType.ALL)
 	private Vehicle vehicle;
 	
-	@OneToOne(mappedBy="driver")
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
 	private Ride currentRide;
 
 	
