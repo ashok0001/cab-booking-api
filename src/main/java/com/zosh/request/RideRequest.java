@@ -8,6 +8,9 @@ public class RideRequest {
 	private double pickupLatitude;
 	private double destinationLongitude;
 	private double destinationLatitude;
+	private String pickupArea;
+	private String destinationArea;
+	
 	
 	
 	public RideRequest() {
@@ -15,12 +18,30 @@ public class RideRequest {
 	}
 	
 	public RideRequest(double pickupLongitude, double pickupLatitude, double destinationLongitude,
-			double destinationLatitude) {
+			double destinationLatitude, String pickupArea, String destinationArea) {
 		super();
 		this.pickupLongitude = pickupLongitude;
 		this.pickupLatitude = pickupLatitude;
 		this.destinationLongitude = destinationLongitude;
 		this.destinationLatitude = destinationLatitude;
+		this.pickupArea = pickupArea;
+		this.destinationArea = destinationArea;
+	}
+
+	public String getPickupArea() {
+		return pickupArea;
+	}
+
+	public void setPickupArea(String pickupArea) {
+		this.pickupArea = pickupArea;
+	}
+
+	public String getDestinationArea() {
+		return destinationArea;
+	}
+
+	public void setDestinationArea(String destinationArea) {
+		this.destinationArea = destinationArea;
 	}
 
 	public double getPickupLatitude() {

@@ -49,6 +49,8 @@ public class RideServiceImplementation implements RideService {
 		double picupLongitude=rideRequest.getPickupLongitude();
 		double destinationLatitude=rideRequest.getDestinationLatitude();
 		double destinationLongitude=rideRequest.getDestinationLongitude();
+		String pickupArea=rideRequest.getPickupArea();
+		String destinationArea=rideRequest.getDestinationArea();
 		
 		
 		List<Driver> availableDrivers=driverService.getAvailableDrivers(picupLatitude, picupLongitude, 5);
@@ -56,12 +58,16 @@ public class RideServiceImplementation implements RideService {
 		Driver nearestDriver=driverService.findNearestDriver(availableDrivers, picupLatitude, picupLongitude);
 		
 		if(nearestDriver==null) {
-			throw new DriverException("Driver not available within 5km range");
+			throw new DriverException("Driver not available");
 		}
 		
 		System.out.println(" duration ----- before ride ");
 		
-        Ride ride = createRideRequest(user, nearestDriver, picupLatitude, picupLongitude, destinationLatitude, destinationLongitude);
+        Ride ride = createRideRequest(user, nearestDriver, 
+        		picupLatitude, picupLongitude, 
+        		destinationLatitude, destinationLongitude,
+        		pickupArea,destinationArea
+        		);
 
         System.out.println(" duration ----- after ride ");
         
@@ -86,7 +92,7 @@ public class RideServiceImplementation implements RideService {
 
 	@Override
 	public Ride createRideRequest(User user, Driver nearesDriver, double pickupLatitude, double pickupLongitude,
-			double destinationLatitude, double destinationLongitude) {
+			double destinationLatitude, double destinationLongitude,String pickupArea,String destinationArea) {
 		
 		Ride ride=new Ride();
 
@@ -97,6 +103,8 @@ public class RideServiceImplementation implements RideService {
 		ride.setDestinationLatitude(destinationLatitude);
 		ride.setDestinationLongitude(destinationLongitude);
 		ride.setStatus(RideStatus.REQUESTED);
+		ride.setPickupArea(pickupArea);
+		ride.setDestinationArea(destinationArea);
 		
 		System.out.println(" ----- a - " + pickupLatitude);
 		

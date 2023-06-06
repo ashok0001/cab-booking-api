@@ -43,12 +43,10 @@ public class Vehicle {
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Driver driver;
-
     
     public Vehicle() {
-		// TODO Auto-generated constructor stub
+		
 	}
-
 
 	public Vehicle(Integer id, String make, String model, int year, String color, String licensePlate, int capacity,
 			Driver driver) {
@@ -63,36 +61,29 @@ public class Vehicle {
 		this.driver = driver;
 	}
 
-
 	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
 	public Driver getDriver() {
 		return driver;
 	}
-
 
 	public void setDriver(Driver driver) {
 		this.driver = driver;
 	}
 
-
 	public String getMake() {
 		return make;
 	}
 
-
 	public void setMake(String make) {
 		this.make = make;
 	}
-
 
 	public String getModel() {
 		return model;

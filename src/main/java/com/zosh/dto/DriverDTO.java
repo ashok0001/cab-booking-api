@@ -2,7 +2,12 @@ package com.zosh.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zosh.modal.Ride;
 import com.zosh.ride.domain.UserRole;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToOne;
 
 public class DriverDTO {
 

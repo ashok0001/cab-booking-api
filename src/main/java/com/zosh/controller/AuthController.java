@@ -85,6 +85,7 @@ public class AuthController {
         createdUser.setEmail(signupRequest.getEmail());
         createdUser.setPassword(encodedPassword);
         createdUser.setFullName(signupRequest.getFullName());
+        createdUser.setMobile(signupRequest.getMobile());
         createdUser.setRole(UserRole.USER);
         
         User savedUser=userRepository.save(createdUser);

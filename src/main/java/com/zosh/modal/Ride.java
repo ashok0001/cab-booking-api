@@ -31,6 +31,10 @@ public class Ride {
 	
 	private double destinationLongitude;
 	
+	private String pickupArea;
+	
+	private String destinationArea;
+	
 	private double distence;
 	
 	private long duration;
@@ -47,9 +51,11 @@ public class Ride {
 		// TODO Auto-generated constructor stub
 	}
 	
+
 	public Ride(Integer id, User user, Driver driver, double pickupLatitude, double pickupLongitude,
-			double destinationLatitude, double destinationLongitude, double distence, long duration, RideStatus status,
-			LocalDateTime startTime, LocalDateTime endTime, double fare) {
+			double destinationLatitude, double destinationLongitude, String pickupArea, String destinationArea,
+			double distence, long duration, RideStatus status, LocalDateTime startTime, LocalDateTime endTime,
+			double fare) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -58,6 +64,8 @@ public class Ride {
 		this.pickupLongitude = pickupLongitude;
 		this.destinationLatitude = destinationLatitude;
 		this.destinationLongitude = destinationLongitude;
+		this.pickupArea = pickupArea;
+		this.destinationArea = destinationArea;
 		this.distence = distence;
 		this.duration = duration;
 		this.status = status;
@@ -65,6 +73,27 @@ public class Ride {
 		this.endTime = endTime;
 		this.fare = fare;
 	}
+
+
+	public String getPickupArea() {
+		return pickupArea;
+	}
+
+
+	public void setPickupArea(String pickupArea) {
+		this.pickupArea = pickupArea;
+	}
+
+
+	public String getDestinationArea() {
+		return destinationArea;
+	}
+
+
+	public void setDestinationArea(String destinationArea) {
+		this.destinationArea = destinationArea;
+	}
+
 
 	public Integer getId() {
 		return id;

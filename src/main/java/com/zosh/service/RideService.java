@@ -12,7 +12,10 @@ public interface RideService {
 	
 	public Ride requestRide(RideRequest rideRequest, User user) throws DriverException;
 	
-	public Ride createRideRequest(User user, Driver nearesDriver,double picupLatitude,double pickupLongitude,double destinationLatitude,double destinationLongitude);
+	public Ride createRideRequest(User user, Driver nearesDriver,
+			double picupLatitude,double pickupLongitude,
+			double destinationLatitude,double destinationLongitude,
+			String pickupArea,String destinationArea);
 	
 	public void acceptRide(Integer rideId) throws RideException;
 	

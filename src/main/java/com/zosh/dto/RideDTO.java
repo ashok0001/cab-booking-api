@@ -14,6 +14,8 @@ public class RideDTO {
 	    private double pickupLongitude;
 	    private double destinationLatitude;
 	    private double destinationLongitude;
+		private String pickupArea;
+		private String destinationArea;
 	    private double distance;
 	    private long duration;
 	    private RideStatus status;
@@ -26,8 +28,9 @@ public class RideDTO {
 		}
 
 		public RideDTO(Integer id, UserDTO user, DriverDTO driver, double pickupLatitude, double pickupLongitude,
-				double destinationLatitude, double destinationLongitude, double distance, long duration,
-				RideStatus status, LocalDateTime startTime, LocalDateTime endTime, double fare) {
+				double destinationLatitude, double destinationLongitude, String pickupArea, String destinationArea,
+				double distance, long duration, RideStatus status, LocalDateTime startTime, LocalDateTime endTime,
+				double fare) {
 			super();
 			this.id = id;
 			this.user = user;
@@ -36,12 +39,30 @@ public class RideDTO {
 			this.pickupLongitude = pickupLongitude;
 			this.destinationLatitude = destinationLatitude;
 			this.destinationLongitude = destinationLongitude;
+			this.pickupArea = pickupArea;
+			this.destinationArea = destinationArea;
 			this.distance = distance;
 			this.duration = duration;
 			this.status = status;
 			this.startTime = startTime;
 			this.endTime = endTime;
 			this.fare = fare;
+		}
+
+		public String getPickupArea() {
+			return pickupArea;
+		}
+
+		public void setPickupArea(String pickupArea) {
+			this.pickupArea = pickupArea;
+		}
+
+		public String getDestinationArea() {
+			return destinationArea;
+		}
+
+		public void setDestinationArea(String destinationArea) {
+			this.destinationArea = destinationArea;
 		}
 
 		public Integer getId() {

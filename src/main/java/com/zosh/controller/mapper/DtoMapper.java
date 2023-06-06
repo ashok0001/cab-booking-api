@@ -25,6 +25,7 @@ public class DtoMapper {
 		driverDto.setRating(driver.getRatig());
 		driverDto.setRole(driver.getRole());
 		
+		
 		return driverDto;
 		
 	}
@@ -60,27 +61,13 @@ public class DtoMapper {
 		rideDto.setStartTime(ride.getStartTime());
 		rideDto.setStatus(ride.getStatus());
 		rideDto.setUser(userDto);
+		rideDto.setPickupArea(ride.getPickupArea());
+		rideDto.setDestinationArea(ride.getDestinationArea());
 		
 		return rideDto;
 	}
 	
 
 	
-	public DriverDTO toPostDtos(Driver driver){
-		
-		DriverDTO driverDto=new DriverDTO();
-		
-		driverDto.setEmail(driver.getEmail());
-		driverDto.setId(driver.getId());
-		driverDto.setLatitude(driver.getLatitude());
-		driverDto.setLongitude(driver.getLongitude());
-		driverDto.setMobile(driver.getMobile());
-		driverDto.setName(driver.getName());
-		driverDto.setRating(driver.getRatig());
-		driverDto.setRole(driver.getRole());
-		
-		return driverDto;
-		
-	}
 
 }

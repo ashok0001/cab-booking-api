@@ -12,9 +12,11 @@ import com.zosh.config.JwtUtil;
 import com.zosh.exception.DriverException;
 import com.zosh.modal.Driver;
 import com.zosh.modal.License;
+import com.zosh.modal.Ride;
 import com.zosh.modal.Vehicle;
 import com.zosh.repository.DriverRepository;
 import com.zosh.repository.LicenseRepository;
+import com.zosh.repository.RideRepository;
 import com.zosh.repository.VehicleRepository;
 import com.zosh.request.DriversSignupRequest;
 import com.zosh.ride.domain.RideStatus;
@@ -40,6 +42,9 @@ public class DriverServiceImplementation implements DriverService {
 	
 	@Autowired
 	private LicenseRepository licenseRepository;
+	
+	@Autowired
+	private RideRepository rideRepository;
 
 	@Override
 	public List<Driver> getAvailableDrivers(double pickupLatitude, double picupLongitude, double radius) {
@@ -60,9 +65,9 @@ public class DriverServiceImplementation implements DriverService {
 			
 			double distence=distenceCalculator.calculateDistance(driverLatitude,driverLongitude, pickupLatitude, picupLongitude);
 			
-			if(distence<=radius) {
+//			if(distence<=radius) {
 				availableDriver.add(driver);
-			}
+//			}
 		}
 		
 		return availableDriver;
@@ -73,6 +78,9 @@ public class DriverServiceImplementation implements DriverService {
 		
 		double min=Double.MAX_VALUE;;
 		Driver nearestDriver = null;
+		
+//		List<Driver> drivers=new ArrayList<>();
+//		double minAuto
 		
 		for(Driver driver : availableDrivers) {
 			double driverLatitude=driver.getLatitude();
@@ -147,6 +155,12 @@ public class DriverServiceImplementation implements DriverService {
 	@Override
 	public Driver getReqDriverProfile(String jwt) throws DriverException {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Ride getDriversCurrentRide(Integer driverId) throws DriverException {
+		Ride curentRide=rideRepository.getDriversCurrentRide(driverId);
 		return null;
 	}
 

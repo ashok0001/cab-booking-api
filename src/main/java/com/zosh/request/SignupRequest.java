@@ -15,15 +15,28 @@ public class SignupRequest {
 	
 	private String password;
 	
+	private String mobile;
+	
 	public SignupRequest() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SignupRequest(String email, String fullName, String password) {
+	public SignupRequest(
+			@NotBlank(message = "Email is Required") @Email(message = "Email should be valid") String email,
+			String fullName, String password, String mobile) {
 		super();
 		this.email = email;
 		this.fullName = fullName;
 		this.password = password;
+		this.mobile = mobile;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getEmail() {
