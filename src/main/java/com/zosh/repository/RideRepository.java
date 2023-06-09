@@ -8,7 +8,7 @@ import com.zosh.modal.Ride;
 
 public interface RideRepository extends JpaRepository<Ride, Integer> {
 	
-	@Query("SELECT R FROM RIDE R WHERE R.STATUS=REQUESTED AND R.DRIVER.ID=:driverId")
+	@Query("SELECT R FROM Ride R WHERE R.status=REQUESTED AND R.driver.ID=:driverId")
 	public Ride getDriversCurrentRide(@Param("driverId") Integer driverId);
 
 }

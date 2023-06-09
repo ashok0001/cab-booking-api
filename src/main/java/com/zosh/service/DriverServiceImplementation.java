@@ -47,17 +47,24 @@ public class DriverServiceImplementation implements DriverService {
 	private RideRepository rideRepository;
 
 	@Override
-	public List<Driver> getAvailableDrivers(double pickupLatitude, double picupLongitude, double radius) {
+	public List<Driver> getAvailableDrivers(double pickupLatitude, double picupLongitude, double radius, Ride ride) {
 		List<Driver> allDrivers=driverRepository.findAll();
 		
 		List<Driver> availableDriver=new ArrayList<>();
 		
+		
 		for(Driver driver:allDrivers) {
 			
-			if(driver.getCurrentRide()!=null && driver.getCurrentRide().getStatus()!=RideStatus.COMPLETED) {
+			if(driver.getCurrentRide()!=null && driver.getCurrentRide().getStatus()!=RideStatus.COMPLETED 
+					) {
+				
 				continue;
 			}
-			
+			if(ride.getDeclinedDrivers().contains(driver.getId())) {
+				System.out.println("its containes");
+				continue;
+			}
+
 			double driverLatitude=driver.getLatitude();
 			double driverLongitude=driver.getLongitude();
 			
@@ -154,14 +161,41 @@ public class DriverServiceImplementation implements DriverService {
 
 	@Override
 	public Driver getReqDriverProfile(String jwt) throws DriverException {
-		// TODO Auto-generated method stub
-		return null;
+		String email=jwtUtil.getEmailFromToken(jwt);
+		Driver driver= driverRepository.findByEmail(email);
+		if(driver==null) {
+			throw new DriverException("driver not exist with email " + email);
+		}
+		
+		return driver;
+		
 	}
 
 	@Override
 	public Ride getDriversCurrentRide(Integer driverId) throws DriverException {
-		Ride curentRide=rideRepository.getDriversCurrentRide(driverId);
-		return null;
+		Driver driver = findDriverById(driverId);
+		return driver.getCurrentRide();
+	}
+
+	@Override
+	public List<Ride> getAllocatedRides(Integer driverId) throws DriverException {
+		List<Ride> allocatedRides=driverRepository.getAllocatedRides(driverId);
+		return allocatedRides;
+	}
+
+	@Override
+	public Driver findDriverById(Integer driverId) throws DriverException {
+		Optional<Driver> opt=driverRepository.findById(driverId);
+		if(opt.isPresent()) {
+			return opt.get();
+		}
+		throw new DriverException("driver not exist with id "+driverId);
+	}
+
+	@Override
+	public List<Ride> completedRids(Integer driverId) throws DriverException {
+		List <Ride> completedRides=driverRepository.getCompletedRides(driverId);
+		return completedRides;
 	}
 
 	

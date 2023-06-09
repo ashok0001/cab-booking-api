@@ -1,5 +1,6 @@
 package com.zosh.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import com.zosh.config.JwtUtil;
 import com.zosh.exception.UserException;
+import com.zosh.modal.Ride;
 import com.zosh.modal.User;
 import com.zosh.repository.UserRepository;
 
@@ -81,6 +83,12 @@ public class UserServiceImplementation implements UserService {
 			return user;
 		}
 		throw new UserException("user not found with email "+email);
+	}
+
+	@Override
+	public List<Ride> completedRids(Integer userId) throws UserException {
+		List <Ride> completedRides=userRepository.getCompletedRides(userId);
+		return completedRides;
 	}
 
 }

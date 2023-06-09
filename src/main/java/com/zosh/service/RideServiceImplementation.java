@@ -52,8 +52,10 @@ public class RideServiceImplementation implements RideService {
 		String pickupArea=rideRequest.getPickupArea();
 		String destinationArea=rideRequest.getDestinationArea();
 		
+		Ride existingRide = new Ride();
 		
-		List<Driver> availableDrivers=driverService.getAvailableDrivers(picupLatitude, picupLongitude, 5);
+		List<Driver> availableDrivers=driverService.getAvailableDrivers(picupLatitude, 
+				picupLongitude, 5, existingRide);
 		
 		Driver nearestDriver=driverService.findNearestDriver(availableDrivers, picupLatitude, picupLongitude);
 		
@@ -91,8 +93,9 @@ public class RideServiceImplementation implements RideService {
 	}
 
 	@Override
-	public Ride createRideRequest(User user, Driver nearesDriver, double pickupLatitude, double pickupLongitude,
-			double destinationLatitude, double destinationLongitude,String pickupArea,String destinationArea) {
+	public Ride createRideRequest(User user, Driver nearesDriver, double pickupLatitude, 
+			double pickupLongitude,double destinationLatitude, double destinationLongitude,
+			String pickupArea,String destinationArea) {
 		
 		Ride ride=new Ride();
 
@@ -224,6 +227,29 @@ public class RideServiceImplementation implements RideService {
 			return ride.get();
 		}
 		throw new RideException("ride not exist with id "+rideId);
+	}
+
+	@Override
+	public void declineRide(Integer rideId, Integer driverId) throws RideException {
+		
+		Ride ride =findRideById(rideId);
+		System.out.println(ride.getId());
+		
+		ride.getDeclinedDrivers().add(driverId);
+		
+		System.out.println(ride.getId()+" - "+ride.getDeclinedDrivers());
+		
+		List<Driver> availableDrivers=driverService.getAvailableDrivers(ride.getPickupLatitude(), 
+				ride.getPickupLongitude(), 5,ride);
+		
+		Driver nearestDriver=driverService.findNearestDriver(availableDrivers, ride.getPickupLatitude(), 
+				ride.getPickupLongitude());
+		
+		
+		ride.setDriver(nearestDriver);
+		
+		rideRepository.save(ride);
+		
 	}
 
 }

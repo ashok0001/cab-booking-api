@@ -35,7 +35,7 @@ public class Driver {
 	private License license;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Ride> rides;
 	
 	@OneToOne(mappedBy="driver",cascade = CascadeType.ALL, orphanRemoval = true)

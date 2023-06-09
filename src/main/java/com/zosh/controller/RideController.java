@@ -17,10 +17,12 @@ import com.zosh.dto.RideDTO;
 import com.zosh.exception.DriverException;
 import com.zosh.exception.RideException;
 import com.zosh.exception.UserException;
+import com.zosh.modal.Driver;
 import com.zosh.modal.Ride;
 import com.zosh.modal.User;
 import com.zosh.request.RideRequest;
 import com.zosh.response.MessageResponse;
+import com.zosh.service.DriverService;
 import com.zosh.service.RideService;
 import com.zosh.service.UserService;
 
@@ -33,6 +35,9 @@ public class RideController {
 	
 	@Autowired
 	private RideService rideService;
+	
+	@Autowired
+	private DriverService driverService;
 	
 	@PostMapping("/request")
 	public ResponseEntity<RideDTO> userRequestRideHandler(@RequestBody RideRequest rideRequest, @RequestHeader("Authorization") String jwt) throws UserException, DriverException{
@@ -49,10 +54,22 @@ public class RideController {
 	@PutMapping("/{rideId}/accept")
 	public ResponseEntity<MessageResponse> acceptRideHandler(@PathVariable Integer rideId) throws UserException, RideException{
 		
-		
 		rideService.acceptRide(rideId);
 		
 		MessageResponse res=new MessageResponse("Ride Accepted By Driver");
+		
+		return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping("/{rideId}/decline")
+	public ResponseEntity<MessageResponse> declineRideHandler(@RequestHeader("Authorization") String jwt, @PathVariable Integer rideId) 
+			throws UserException, RideException, DriverException{
+		
+		Driver driver = driverService.getReqDriverProfile(jwt);
+		
+		rideService.declineRide(rideId, driver.getId());
+		
+		MessageResponse res=new MessageResponse("Ride decline By Driver");
 		
 		return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
 	}

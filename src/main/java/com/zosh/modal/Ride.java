@@ -1,12 +1,18 @@
 package com.zosh.modal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zosh.ride.domain.RideStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 
@@ -17,11 +23,14 @@ public class Ride {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private User user;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	private Driver driver; 
+	private Driver driver;
+	
+	@JsonIgnore
+	private List<Integer> declinedDrivers = new ArrayList<>();
 	
 	private double pickupLatitude;
 	
@@ -50,16 +59,17 @@ public class Ride {
 	public Ride() {
 		// TODO Auto-generated constructor stub
 	}
-	
 
-	public Ride(Integer id, User user, Driver driver, double pickupLatitude, double pickupLongitude,
-			double destinationLatitude, double destinationLongitude, String pickupArea, String destinationArea,
-			double distence, long duration, RideStatus status, LocalDateTime startTime, LocalDateTime endTime,
-			double fare) {
+
+	public Ride(Integer id, User user, Driver driver, List<Integer> declinedDrivers, double pickupLatitude,
+			double pickupLongitude, double destinationLatitude, double destinationLongitude, String pickupArea,
+			String destinationArea, double distence, long duration, RideStatus status, LocalDateTime startTime,
+			LocalDateTime endTime, double fare) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.driver = driver;
+		this.declinedDrivers = declinedDrivers;
 		this.pickupLatitude = pickupLatitude;
 		this.pickupLongitude = pickupLongitude;
 		this.destinationLatitude = destinationLatitude;
@@ -75,10 +85,17 @@ public class Ride {
 	}
 
 
+	public List<Integer> getDeclinedDrivers() {
+		return declinedDrivers;
+	}
+
+	public void setDeclinedDrivers(List<Integer> declinedDrivers) {
+		this.declinedDrivers = declinedDrivers;
+	}
+
 	public String getPickupArea() {
 		return pickupArea;
 	}
-
 
 	public void setPickupArea(String pickupArea) {
 		this.pickupArea = pickupArea;
