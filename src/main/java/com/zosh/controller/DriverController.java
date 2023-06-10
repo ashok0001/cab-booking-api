@@ -25,6 +25,8 @@ public class DriverController {
 	
 	@GetMapping("/profile")
 	public ResponseEntity<Driver> getReqDriverProfileHandler(@RequestHeader("Authorization") String jwt) throws DriverException {
+
+		// ok
 		
 		Driver driver = driverService.getReqDriverProfile(jwt);
 		
