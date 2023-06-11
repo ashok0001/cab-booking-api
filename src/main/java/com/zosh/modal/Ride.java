@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zosh.ride.domain.RideStatus;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
@@ -56,6 +57,9 @@ public class Ride {
 	
 	private double fare;
 	
+    @Embedded
+    private PaymentDetails paymentDetails=new PaymentDetails();
+	
 	public Ride() {
 		// TODO Auto-generated constructor stub
 	}
@@ -82,6 +86,16 @@ public class Ride {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.fare = fare;
+	}
+
+
+	public PaymentDetails getPaymentDetails() {
+		return paymentDetails;
+	}
+
+
+	public void setPaymentDetails(PaymentDetails paymentDetails) {
+		this.paymentDetails = paymentDetails;
 	}
 
 
