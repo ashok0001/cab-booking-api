@@ -3,6 +3,7 @@ package com.zosh.dto;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import com.zosh.modal.PaymentDetails;
 import com.zosh.ride.domain.RideStatus;
 
 public class RideDTO {
@@ -22,31 +23,18 @@ public class RideDTO {
 	    private LocalDateTime startTime;
 	    private LocalDateTime endTime;
 	    private double fare;
+	    private PaymentDetails paymentDetails;
 	    
 	    public RideDTO() {
 			// TODO Auto-generated constructor stub
 		}
 
-		public RideDTO(Integer id, UserDTO user, DriverDTO driver, double pickupLatitude, double pickupLongitude,
-				double destinationLatitude, double destinationLongitude, String pickupArea, String destinationArea,
-				double distance, long duration, RideStatus status, LocalDateTime startTime, LocalDateTime endTime,
-				double fare) {
-			super();
-			this.id = id;
-			this.user = user;
-			this.driver = driver;
-			this.pickupLatitude = pickupLatitude;
-			this.pickupLongitude = pickupLongitude;
-			this.destinationLatitude = destinationLatitude;
-			this.destinationLongitude = destinationLongitude;
-			this.pickupArea = pickupArea;
-			this.destinationArea = destinationArea;
-			this.distance = distance;
-			this.duration = duration;
-			this.status = status;
-			this.startTime = startTime;
-			this.endTime = endTime;
-			this.fare = fare;
+		public PaymentDetails getPaymentDetails() {
+			return paymentDetails;
+		}
+
+		public void setPaymentDetails(PaymentDetails paymentDetails) {
+			this.paymentDetails = paymentDetails;
 		}
 
 		public String getPickupArea() {

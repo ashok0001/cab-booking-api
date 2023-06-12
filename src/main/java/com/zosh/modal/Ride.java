@@ -58,7 +58,7 @@ public class Ride {
 	private double fare;
 	
     @Embedded
-    private PaymentDetails paymentDetails=new PaymentDetails();
+    private PaymentDetails paymentDetails= new PaymentDetails();
 	
 	public Ride() {
 		// TODO Auto-generated constructor stub

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zosh.modal.Ride;
+import com.zosh.modal.Vehicle;
 import com.zosh.ride.domain.UserRole;
 
 import jakarta.persistence.CascadeType;
@@ -19,24 +20,20 @@ public class DriverDTO {
     private double latitude;
     private double longitude;
     private UserRole role;
+    private Vehicle vehicle;
     
    
    
     public DriverDTO() {
 		
 	}
-    
-	public DriverDTO(Integer id, String name, String email, String mobile, double rating, double latitude,
-			double longitude, UserRole role) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.mobile = mobile;
-		this.rating = rating;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.role = role;
+
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
 	}
 
 	public Integer getId() {

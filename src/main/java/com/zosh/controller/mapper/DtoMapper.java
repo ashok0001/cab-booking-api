@@ -24,6 +24,7 @@ public class DtoMapper {
 		driverDto.setName(driver.getName());
 		driverDto.setRating(driver.getRatig());
 		driverDto.setRole(driver.getRole());
+		driverDto.setVehicle(driver.getVehicle());
 		
 		
 		return driverDto;
@@ -63,6 +64,7 @@ public class DtoMapper {
 		rideDto.setUser(userDto);
 		rideDto.setPickupArea(ride.getPickupArea());
 		rideDto.setDestinationArea(ride.getDestinationArea());
+		rideDto.setPaymentDetails(ride.getPaymentDetails());
 		
 		return rideDto;
 	}

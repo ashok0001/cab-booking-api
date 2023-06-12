@@ -177,16 +177,12 @@ public class RideServiceImplementation implements RideService {
 		Duration duration = Duration.between(start, end);
 		long milliSecond = duration.toMillis();
 
-//		ride.setDuration(duration);
-//		long hours = duration.toHours();
-//		long minutes = duration.toMinutes() % 60;
-//		long duration=calculaters.calculateDuration(ride.getStartTime(), ride.getEndTime());
 
 		System.out.println("duration ------- "+ milliSecond);
 		double fare=calculaters.calculateFare(distence);
 		
-		ride.setDistence(distence);
-		ride.setFare(fare);
+		ride.setDistence(Math.round(distence * 100.0) / 100.0);
+		ride.setFare((int) Math.round(fare));
 		ride.setDuration(milliSecond);
 		ride.setEndTime(LocalDateTime.now());
 		
