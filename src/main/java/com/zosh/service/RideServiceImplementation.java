@@ -191,6 +191,11 @@ public class RideServiceImplementation implements RideService {
 		driver.getRides().add(ride);
 		driver.setCurrentRide(null);
 		
+		Integer driversRevenue=(int) (driver.getTotalRevenue()+ Math.round(fare*0.8)) ;
+		driver.setTotalRevenue(driversRevenue);
+		
+		System.out.println("drivers revenue -- "+driversRevenue);
+		
 		driverRepository.save(driver);
 		rideRepository.save(ride);
 		

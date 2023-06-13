@@ -45,6 +45,8 @@ public class Driver {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Ride currentRide;
 	
+	private Integer totalRevenue=0;
+	
 	public Driver() {
 		
 	}
@@ -67,6 +69,14 @@ public class Driver {
 		this.currentRide = currentRide;
 	}
 	
+	public Integer getTotalRevenue() {
+		return totalRevenue;
+	}
+
+	public void setTotalRevenue(Integer totalRevenue) {
+		this.totalRevenue = totalRevenue;
+	}
+
 	public Ride getCurrentRide() {
 		return currentRide;
 	}
