@@ -24,9 +24,18 @@ public class RideDTO {
 	    private LocalDateTime endTime;
 	    private double fare;
 	    private PaymentDetails paymentDetails;
+	    private int otp;
 	    
 	    public RideDTO() {
 			// TODO Auto-generated constructor stub
+		}
+
+		public int getOtp() {
+			return otp;
+		}
+
+		public void setOtp(int otp) {
+			this.otp = otp;
 		}
 
 		public PaymentDetails getPaymentDetails() {

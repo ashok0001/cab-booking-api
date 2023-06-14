@@ -65,7 +65,7 @@ public class DtoMapper {
 		rideDto.setPickupArea(ride.getPickupArea());
 		rideDto.setDestinationArea(ride.getDestinationArea());
 		rideDto.setPaymentDetails(ride.getPaymentDetails());
-		
+		rideDto.setOtp(ride.getOtp());
 		return rideDto;
 	}
 	

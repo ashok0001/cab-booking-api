@@ -151,7 +151,7 @@ public class RideServiceImplementation implements RideService {
 	public void startRide(Integer rideId,int otp) throws RideException {
 		Ride ride=findRideById(rideId);
 		
-		if(otp==ride.getOtp()) {
+		if(otp!=ride.getOtp()) {
 			throw new RideException("please provide a valid otp");
 		}
 		
