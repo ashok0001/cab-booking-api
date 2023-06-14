@@ -21,6 +21,7 @@ import com.zosh.modal.Driver;
 import com.zosh.modal.Ride;
 import com.zosh.modal.User;
 import com.zosh.request.RideRequest;
+import com.zosh.request.StartRideRequest;
 import com.zosh.response.MessageResponse;
 import com.zosh.service.DriverService;
 import com.zosh.service.RideService;
@@ -75,9 +76,9 @@ public class RideController {
 	}
 	
 	@PutMapping("/{rideId}/start")
-	public ResponseEntity<MessageResponse> rideStartHandler(@PathVariable Integer rideId) throws UserException, RideException{
+	public ResponseEntity<MessageResponse> rideStartHandler(@PathVariable Integer rideId, @RequestBody  StartRideRequest req) throws UserException, RideException{
 		
-		rideService.startRide(rideId);
+		rideService.startRide(rideId,req.getOtp());
 		
 		MessageResponse res=new MessageResponse("Ride is started");
 		

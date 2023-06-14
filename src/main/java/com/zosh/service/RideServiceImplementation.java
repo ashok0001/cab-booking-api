@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +126,11 @@ public class RideServiceImplementation implements RideService {
 		
 		driver.setCurrentRide(ride);
 		
+        Random random = new Random();
+        
+        int otp = random.nextInt(9000) + 1000;
+        ride.setOtp(otp);
+        
 		driverRepository.save(driver);
 		
 		rideRepository.save(ride);
@@ -142,8 +148,12 @@ public class RideServiceImplementation implements RideService {
 	}
 
 	@Override
-	public void startRide(Integer rideId) throws RideException {
+	public void startRide(Integer rideId,int otp) throws RideException {
 		Ride ride=findRideById(rideId);
+		
+		if(otp==ride.getOtp()) {
+			throw new RideException("please provide a valid otp");
+		}
 		
 		ride.setStatus(RideStatus.STARTED);
 		ride.setStartTime(LocalDateTime.now());

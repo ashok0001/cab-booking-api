@@ -57,6 +57,8 @@ public class Ride {
 	
 	private double fare;
 	
+	private int otp;
+	
     @Embedded
     private PaymentDetails paymentDetails= new PaymentDetails();
 	
@@ -86,6 +88,16 @@ public class Ride {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.fare = fare;
+	}
+
+
+	public int getOtp() {
+		return otp;
+	}
+
+
+	public void setOtp(int otp) {
+		this.otp = otp;
 	}
 
 

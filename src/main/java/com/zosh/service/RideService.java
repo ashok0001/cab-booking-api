@@ -21,7 +21,7 @@ public interface RideService {
 	
 	public void declineRide(Integer rideId, Integer driverId) throws RideException;
 	
-	public void startRide(Integer rideId) throws RideException;
+	public void startRide(Integer rideId,int opt) throws RideException;
 	
 	public void completeRide(Integer rideId) throws RideException;
 	
